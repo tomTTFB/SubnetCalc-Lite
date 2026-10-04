@@ -19,6 +19,21 @@ int main(int argc, char **argv) {
     unsigned int a = 0, b = 0, c = 0, d = 0, prefix = 0;
     int count = sscanf(argv[1], "%u.%u.%u.%u/%u", &a, &b, &c, &d, &prefix);
 
+    // input validation checks
+    if(count != 5) {
+        fprintf(stderr, "ERROR: Input not shaped like address\n");
+        return 1;
+    }
+    if(a > 255 || b > 255 || c > 255 || d > 255) {
+        fprintf(stderr, "ERROR: Part of address exceeds 255\n");
+        return 1;
+    }
+    if(prefix > 32) {
+        fprintf(stderr, "ERROR: Prefix cannot exceed 32\n");
+        return 1;
+    }
+
+
     printf("Count: %d\n", count);
     printf("%u %u %u %u /%u\n", a, b, c, d, prefix);
 }
