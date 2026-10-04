@@ -39,4 +39,7 @@ int main(int argc, char **argv) {
 
     unsigned int subnetMask = prefix ? 0xFFFFFFFFu << (32 - prefix) : 0;
     print_ip(subnetMask);
+
+    unsigned int network = ip & subnetMask;
+    print_ip(network);
 }
