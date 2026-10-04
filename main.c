@@ -5,14 +5,14 @@
 // 00000000 00000000 11000000 10101000 
 // becomes
 // 00000000 00000000 00000000 10101000
-void print_ip(unsigned int ip) {
-    printf("%u.%u.%u.%u\n", ip >> 24, (ip >> 16) & 255, (ip >> 8) & 255, ip & 255);
+void print_ip(const char *label, unsigned int ip) {
+    printf("%-12s %u.%u.%u.%u\n", label, ip >> 24, (ip >> 16) & 255, (ip >> 8) & 255, ip & 255);
 }
 
 int main(int argc, char **argv) {
 
     if (argc != 2) {
-        printf("Usage: %s 192.168.1.10/24\n", argv[0]);
+        fprintf(stderr, "Usage: %s 192.168.1.10/24\n", argv[0]);
         return 1;
     }
 
@@ -35,19 +35,16 @@ int main(int argc, char **argv) {
 
     unsigned int ip = (a << 24) | (b << 16) | (c << 8) | d;
 
-    print_ip(ip);
-
     unsigned int subnetMask = prefix ? 0xFFFFFFFFu << (32 - prefix) : 0;
-    print_ip(subnetMask);
-
     unsigned int network = ip & subnetMask;
-    print_ip(network);
-
     unsigned int wildcard = ~subnetMask;
-    print_ip(wildcard);
-
     unsigned int broadcast = network | wildcard;
-    print_ip(broadcast);
+
+    print_ip("Address:", ip);
+    print_ip("Subnet Mask:", subnetMask);
+    print_ip("Network:", network);
+    print_ip("Wildcard:", wildcard);
+    print_ip("Broadcast:", broadcast);
 
     printf("\n");
 
