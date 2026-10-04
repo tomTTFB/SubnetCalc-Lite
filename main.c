@@ -72,6 +72,10 @@ int main(int argc, char **argv) {
 
     printf("%-12s %s - %s\n", "Host Range:", firstStr, lastStr);
 
-    printf("\n");
+    // output number of usable hosts, %-12s helps to line up the outputed text so it looks nice
+    unsigned int hosts = last - first + 1;
+    printf("%-12s %u\n", "Hosts:", hosts);
 
+    printf("\n");
+    return 0;
 }
