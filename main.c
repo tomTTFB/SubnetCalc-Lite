@@ -9,6 +9,10 @@ void print_ip(const char *label, unsigned int ip) {
     printf("%-12s %u.%u.%u.%u\n", label, ip >> 24, (ip >> 16) & 255, (ip >> 8) & 255, ip & 255);
 }
 
+void ip_to_str(unsigned int ip, char *out, size_t size) {
+    snprintf(out, size, "%u.%u.%u.%u", ip >> 24, (ip >> 16) & 255, (ip >> 8) & 255, ip & 255);
+}
+
 int main(int argc, char **argv) {
 
     if (argc != 2) {
@@ -45,6 +49,28 @@ int main(int argc, char **argv) {
     print_ip("Network:", network);
     print_ip("Wildcard:", wildcard);
     print_ip("Broadcast:", broadcast);
+
+    unsigned int first;
+    unsigned int last;
+
+    if (prefix == 32) {
+        first = ip;
+        last = ip;
+    }
+    else if (prefix == 31) {
+        first = network;
+        last = broadcast;
+    }
+    else {
+        first = network + 1;
+        last = broadcast - 1;
+    }
+
+    char firstStr[16], lastStr[16];
+    ip_to_str(first, firstStr, sizeof firstStr);
+    ip_to_str(last, lastStr, sizeof lastStr);
+
+    printf("%-12s %s - %s\n", "Host Range:", firstStr, lastStr);
 
     printf("\n");
 
