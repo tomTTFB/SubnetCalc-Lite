@@ -42,4 +42,13 @@ int main(int argc, char **argv) {
 
     unsigned int network = ip & subnetMask;
     print_ip(network);
+
+    unsigned int wildcard = ~subnetMask;
+    print_ip(wildcard);
+
+    unsigned int broadcast = network | wildcard;
+    print_ip(broadcast);
+
+    printf("\n");
+
 }
