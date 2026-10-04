@@ -33,7 +33,10 @@ int main(int argc, char **argv) {
         return 1;
     }
 
+    unsigned int ip = (a << 24) | (b << 16) | (c << 8) | d;
 
-    printf("Count: %d\n", count);
-    printf("%u %u %u %u /%u\n", a, b, c, d, prefix);
+    print_ip(ip);
+
+    unsigned int subnetMask = prefix ? 0xFFFFFFFFu << (32 - prefix) : 0;
+    print_ip(subnetMask);
 }
